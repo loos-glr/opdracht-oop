@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boostles: De Karakter Blauwdruk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .blueprint-grid {
+            background-image: radial-gradient(#3b82f6 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-color: #f8fafc;
+        }
+        .character-preview {
+            transition: all 0.3s ease;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen font-sans">
+
+    <div class="max-w-5xl mx-auto p-6">
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold text-slate-800 mb-2">🚀 Boostles Scripting: Opdracht 1</h1>
+            <p class="text-slate-600 text-lg">Vandaag gaan we geen "code schrijven", we gaan een <strong>Blauwdruk</strong> maken.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Linker kolom: De Uitleg & De Code -->
+            <div class="space-y-6">
+                <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h2 class="text-xl font-bold text-blue-600 mb-4 flex items-center">
+                        <span class="bg-blue-100 p-2 rounded-lg mr-2">🧠</span> De Metafoor
+                    </h2>
+                    <p class="text-slate-700 leading-relaxed">
+                        Denk aan een <strong>Class</strong> als een tekening (blauwdruk) van een Lego-poppetje. 
+                        In de tekening staat welke kleur hij heeft, maar het poppetje <em>bestaat</em> nog niet echt op je bureau.
+                    </p>
+                    <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                        <li>🔹 <strong>Properties:</strong> Wat het poppetje <u>heeft</u> (Naam, Kleur, Kracht).</li>
+                        <li>🔹 <strong>Methods:</strong> Wat het poppetje <u>kan</u> (Zwaaien, Dansen).</li>
+                    </ul>
+                </section>
+
+                <section class="bg-slate-900 p-6 rounded-2xl shadow-xl text-slate-300 font-mono text-sm">
+                    <h3 class="text-blue-400 mb-4 border-bottom border-slate-700 pb-2">// Jouw Karakter Blauwdruk</h3>
+                    <div id="code-display" class="space-y-1">
+                        <p><span class="text-pink-500">class</span> <span class="text-yellow-400">Karakter</span> {</p>
+                        <p class="pl-4">  <span class="text-pink-500">constructor</span>(naam, kleur) {</p>
+                        <p class="pl-8 text-slate-500">// Dit krijgt het poppetje mee bij de geboorte</p>
+                        <p class="pl-8">    <span class="text-blue-400">this</span>.naam = naam;</p>
+                        <p class="pl-8">    <span class="text-blue-400">this</span>.kleur = kleur;</p>
+                        <p class="pl-8">    <span class="text-blue-400">this</span>.energie = <span class="text-purple-400">100</span>;</p>
+                        <p class="pl-4">  }</p>
+                        <p class="pl-4 mt-2">  <span class="text-green-400">zwaai</span>() {</p>
+                        <p class="pl-8">    <span class="text-blue-400">return</span> <span class="text-yellow-200">`Hoi! Ik ben ${this.naam}`</span>;</p>
+                        <p class="pl-4">  }</p>
+                        <p>}</p>
+                        <p class="mt-4 text-slate-500">// Hier maken we het poppetje ECHT</p>
+                        <p><span class="text-pink-500">const</span> held = <span class="text-pink-500">new</span> <span class="text-yellow-400">Karakter</span>(<span class="text-yellow-200">"Hero"</span>, <span class="text-yellow-200">"Blue"</span>);</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Rechter kolom: De Interactieve Preview -->
+            <div class="space-y-6">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 blueprint-grid flex flex-col items-center justify-center min-h-[400px]">
+                    <div id="character-ui" class="character-preview bg-blue-500 w-32 h-32 rounded-3xl shadow-lg mb-6 flex items-center justify-center border-4 border-white">
+                        <span class="text-4xl">🤖</span>
+                    </div>
+                    <div class="text-center">
+                        <h3 id="preview-name" class="text-2xl font-black text-slate-800 uppercase tracking-wider">Hero</h3>
+                        <p id="preview-msg" class="text-slate-500 italic mt-2">...</p>
+                    </div>
+                    
+                    <!-- Simpele knoppen voor successervaring -->
+                    <div class="flex gap-4 mt-8">
+                        <button onclick="interact('zwaai')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-bold transition-all active:scale-95 shadow-md">
+                            Laat hem zwaaien
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Input velden om 'eigenschappen' aan te passen -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-slate-800 mb-4">Pas de Properties aan:</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase">Naam</label>
+                            <input type="text" id="input-name" placeholder="Naam..." class="w-full mt-1 px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase">Kleur</label>
+                            <select id="input-color" class="w-full mt-1 px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg outline-none">
+                                <option value="bg-blue-500">Blauw</option>
+                                <option value="bg-red-500">Rood</option>
+                                <option value="bg-green-500">Groen</option>
+                                <option value="bg-yellow-400">Geel</option>
+                                <option value="bg-purple-500">Paars</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="updateBlueprint()" class="w-full mt-4 bg-slate-800 text-white py-2 rounded-lg font-bold hover:bg-slate-700 transition-colors">
+                        Update de Blauwdruk
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- De 'Checklist' voor zelfvertrouwen -->
+        <footer class="mt-12 bg-blue-50 p-8 rounded-3xl border border-blue-100">
+            <h3 class="text-xl font-bold text-blue-900 mb-4">✅ Wat we nu hebben geleerd:</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="flex items-start bg-white p-4 rounded-xl shadow-sm">
+                    <input type="checkbox" class="mt-1 mr-3 h-5 w-5 rounded border-blue-300 text-blue-600 focus:ring-blue-500">
+                    <p class="text-sm text-slate-700">De <strong>Class</strong> is de tekening, het object is de robot.</p>
+                </div>
+                <div class="flex items-start bg-white p-4 rounded-xl shadow-sm">
+                    <input type="checkbox" class="mt-1 mr-3 h-5 w-5 rounded border-blue-300 text-blue-600 focus:ring-blue-500">
+                    <p class="text-sm text-slate-700"><strong>this</strong> betekent: "Hé, ik heb het over mijzelf!"</p>
+                </div>
+                <div class="flex items-start bg-white p-4 rounded-xl shadow-sm">
+                    <input type="checkbox" class="mt-1 mr-3 h-5 w-5 rounded border-blue-300 text-blue-600 focus:ring-blue-500">
+                    <p class="text-sm text-slate-700">Met <strong>new</strong> bouwen we een echt object uit de tekening.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // De echte OOP logica achter de schermen
+        class Karakter {
+            constructor(naam, kleur) {
+                this.naam = naam;
+                this.kleur = kleur;
+                this.energie = 100;
+            }
+
+            zwaai() {
+                return `Hoi! Ik ben ${this.naam} en ik ben klaar voor de les!`;
+            }
+        }
+
+        let huidigeHeld = new Karakter("Hero", "bg-blue-500");
+
+        function updateBlueprint() {
+            const naam = document.getElementById('input-name').value || "Onbekend";
+            const kleur = document.getElementById('input-color').value;
+            
+            // We maken een NIEUW object aan (new Karakter)
+            huidigeHeld = new Karakter(naam, kleur);
+            
+            // Update UI
+            const ui = document.getElementById('character-ui');
+            ui.className = `character-preview ${huidigeHeld.kleur} w-32 h-32 rounded-3xl shadow-lg mb-6 flex items-center justify-center border-4 border-white`;
+            document.getElementById('preview-name').innerText = huidigeHeld.naam;
+            document.getElementById('preview-msg').innerText = "Blauwdruk bijgewerkt!";
+        }
+
+        function interact(action) {
+            const msg = document.getElementById('preview-msg');
+            const ui = document.getElementById('character-ui');
+            
+            if(action === 'zwaai') {
+                msg.innerText = huidigeHeld.zwaai();
+                ui.classList.add('pulse');
+                setTimeout(() => ui.classList.remove('pulse'), 2000);
+            }
+        }
+    </script>
+</body>
+</html>

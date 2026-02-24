@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boostles: De Slimme Robot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .blueprint-grid {
+            background-image: radial-gradient(#3b82f6 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-color: #f8fafc;
+        }
+        .super-glow {
+            box-shadow: 0 0 20px 5px rgba(234, 179, 8, 0.7);
+            border-color: #eab308 !important;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .shake { animation: shake 0.2s ease-in-out 0s 2; }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen font-sans text-slate-900">
+
+    <div class="max-w-5xl mx-auto p-6">
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold text-slate-800 mb-2">🚀 Opdracht 3: De Slimme Robot</h1>
+            <p class="text-slate-600 text-lg">Vandaag leert jouw robot om <strong>beslissingen</strong> te nemen.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Linker kolom: De Uitleg -->
+            <div class="space-y-6">
+                <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h2 class="text-xl font-bold text-orange-600 mb-4 flex items-center">
+                        <span class="bg-orange-100 p-2 rounded-lg mr-2">🤔</span> Keuzes Maken (If/Else)
+                    </h2>
+                    <p class="text-slate-700 leading-relaxed mb-4">
+                        Een echte software developer schrijft regels voor de computer. Bijvoorbeeld: 
+                        <em>"ALS de energie hoog genoeg is, DAN mag de robot zijn super-kracht gebruiken."</em>
+                    </p>
+                    <div class="bg-orange-50 p-4 rounded-xl border border-orange-100 italic text-sm text-orange-800">
+                        "Programmeren is eigenlijk gewoon een hele lange lijst met keuzes maken."
+                    </div>
+                </section>
+
+                <section class="bg-slate-900 p-6 rounded-2xl shadow-xl text-slate-300 font-mono text-xs md:text-sm">
+                    <h3 class="text-blue-400 mb-4 border-b border-slate-700 pb-2">// De Slimme Method</h3>
+                    <div class="space-y-1">
+                        <p><span class="text-green-400">specialeSkill</span>() {</p>
+                        <p class="pl-4"><span class="text-pink-500">if</span> (<span class="text-blue-400">this</span>.energie >= <span id="code-threshold" class="text-purple-400 font-bold">80</span>) {</p>
+                        <p class="pl-8 text-slate-500">// Als energie hoog is:</p>
+                        <p class="pl-8"><span class="text-blue-500">return</span> <span class="text-yellow-200">"🔥 SUPER MODE!"</span>;</p>
+                        <p class="pl-4">} <span class="text-pink-500">else</span> {</p>
+                        <p class="pl-8 text-slate-500">// Als energie te laag is:</p>
+                        <p class="pl-8"><span class="text-blue-500">return</span> <span class="text-yellow-200">"Ik ben te moe..."</span>;</p>
+                        <p class="pl-4">}</p>
+                        <p>}</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Rechter kolom: De Simulator -->
+            <div class="space-y-6">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 blueprint-grid flex flex-col items-center justify-center min-h-[400px]">
+                    
+                    <!-- Energie UI -->
+                    <div class="w-full max-w-xs mb-8">
+                        <div class="flex justify-between mb-1">
+                            <span class="text-xs font-bold text-slate-500 uppercase">Batterij</span>
+                            <span id="energy-text" class="text-xs font-bold text-blue-600">50%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden border border-slate-300">
+                            <div id="energy-bar" class="bg-blue-500 h-full transition-all duration-500" style="width: 50%"></div>
+                        </div>
+                    </div>
+
+                    <div id="robot-display" class="bg-slate-800 w-32 h-32 rounded-3xl shadow-lg mb-6 flex items-center justify-center border-4 border-white transition-all duration-300">
+                        <span id="robot-emoji" class="text-5xl">😐</span>
+                    </div>
+
+                    <div class="text-center mb-6">
+                        <p id="robot-msg" class="text-slate-500 font-medium italic text-sm min-h-[20px]">...</p>
+                    </div>
+                    
+                    <!-- Interactie -->
+                    <div class="grid grid-cols-3 gap-3 w-full">
+                        <button onclick="changeEnergy(20)" class="bg-green-500 text-white p-2 rounded-lg font-bold text-xs shadow-md hover:bg-green-600 transition-colors">
+                            +20 Energie
+                        </button>
+                        <button onclick="changeEnergy(-20)" class="bg-red-500 text-white p-2 rounded-lg font-bold text-xs shadow-md hover:bg-red-600 transition-colors">
+                            -20 Energie
+                        </button>
+                        <button onclick="trySpecial()" class="bg-yellow-500 text-white p-2 rounded-lg font-bold text-xs shadow-md hover:bg-yellow-600 transition-all active:scale-90">
+                            SPECIAL SKILL
+                        </button>
+                    </div>
+                </div>
+
+                <!-- De "Editor" voor de student -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-slate-800 mb-2">Pas de Logica aan:</h3>
+                    <p class="text-xs text-slate-500 mb-4">Vanaf hoeveel energie mag de robot zijn krachten gebruiken?</p>
+                    
+                    <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span class="font-mono text-sm font-bold">Energie >= </span>
+                        <input type="number" id="input-threshold" value="80" min="1" max="100" 
+                               oninput="updateThreshold()"
+                               class="w-20 px-3 py-1 rounded border-2 border-orange-400 bg-orange-50 font-bold text-orange-700 focus:outline-none">
+                        <span class="text-xs text-slate-400 font-medium">(Kies tussen 1 en 100)</span>
+                    </div>
+                    
+                    <div id="hint-box" class="mt-4 p-3 bg-blue-50 border border-blue-100 rounded-lg text-xs text-blue-700 hidden">
+                        💡 <strong>Tip:</strong> Zet de energie in de simulator op 100 en druk op "Special Skill". Verlaag daarna de energie en kijk wat er gebeurt!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leerdoelen Checklist -->
+        <footer class="mt-12 bg-orange-50 p-8 rounded-3xl border border-orange-100">
+            <h3 class="text-xl font-bold text-orange-900 mb-4">✅ Wat we vandaag hebben bereikt:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex items-start bg-white p-4 rounded-xl shadow-sm border border-orange-100">
+                    <div class="bg-green-100 text-green-600 rounded-full p-1 mr-3 mt-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <p class="text-sm text-slate-700">Ik snap dat een <strong>if-statement</strong> de computer laat kiezen.</p>
+                </div>
+                <div class="flex items-start bg-white p-4 rounded-xl shadow-sm border border-orange-100">
+                    <div class="bg-green-100 text-green-600 rounded-full p-1 mr-3 mt-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <p class="text-sm text-slate-700">Ik kan de <strong>voorwaarde</strong> (het getal) aanpassen in de code.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // De Class met de nieuwe logica
+        class Robot {
+            constructor() {
+                this.energie = 50;
+                this.threshold = 80;
+            }
+
+            setThreshold(value) {
+                this.threshold = value;
+            }
+
+            specialeSkill() {
+                if (this.energie >= this.threshold) {
+                    return { success: true, text: "🔥 SUPER MODE GEACTIVEERD! KABOOM!" };
+                } else {
+                    return { success: false, text: `Niet genoeg energie... Ik heb minstens ${this.threshold}% nodig.` };
+                }
+            }
+        }
+
+        const mijnRobot = new Robot();
+
+        function updateThreshold() {
+            const val = document.getElementById('input-threshold').value;
+            mijnRobot.setThreshold(parseInt(val) || 0);
+            document.getElementById('code-threshold').innerText = val;
+            document.getElementById('hint-box').classList.remove('hidden');
+        }
+
+        function changeEnergy(amount) {
+            mijnRobot.energie = Math.max(0, Math.min(100, mijnRobot.energie + amount));
+            updateUI();
+        }
+
+        function trySpecial() {
+            const result = mijnRobot.specialeSkill();
+            const msgEl = document.getElementById('robot-msg');
+            const robotEl = document.getElementById('robot-display');
+            const emojiEl = document.getElementById('robot-emoji');
+
+            msgEl.innerText = result.text;
+            
+            if (result.success) {
+                robotEl.classList.add('super-glow', 'scale-110');
+                emojiEl.innerText = "⚡";
+                msgEl.className = "text-orange-600 font-bold text-sm uppercase";
+                setTimeout(() => {
+                    robotEl.classList.remove('super-glow', 'scale-110');
+                    updateUI();
+                }, 2000);
+            } else {
+                robotEl.classList.add('shake');
+                emojiEl.innerText = "😭";
+                setTimeout(() => {
+                    robotEl.classList.remove('shake');
+                    updateUI();
+                }, 500);
+            }
+        }
+
+        function updateUI() {
+            const energy = mijnRobot.energie;
+            document.getElementById('energy-bar').style.width = energy + "%";
+            document.getElementById('energy-text').innerText = energy + "%";
+            
+            const emojiEl = document.getElementById('robot-emoji');
+            if(energy > 80) emojiEl.innerText = "🤩";
+            else if(energy < 20) emojiEl.innerText = "🥱";
+            else emojiEl.innerText = "😐";
+
+            // Pas kleur van bar aan op basis van threshold
+            const bar = document.getElementById('energy-bar');
+            if(energy >= mijnRobot.threshold) {
+                bar.classList.replace('bg-blue-500', 'bg-orange-500');
+            } else {
+                bar.classList.replace('bg-orange-500', 'bg-blue-500');
+            }
+        }
+
+        // Initiele state
+        updateUI();
+    </script>
+</body>
+</html>

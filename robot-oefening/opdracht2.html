@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boostles: Actie en Reactie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .blueprint-grid {
+            background-image: radial-gradient(#3b82f6 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-color: #f8fafc;
+        }
+        .status-pulse {
+            animation: pulse-bg 2s infinite;
+        }
+        @keyframes pulse-bg {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen font-sans">
+
+    <div class="max-w-5xl mx-auto p-6">
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold text-slate-800 mb-2">🚀 Opdracht 2: Actie & Reactie</h1>
+            <p class="text-slate-600 text-lg">Vandaag leert jouw karakter om te <strong>reageren</strong> op de wereld.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Linker kolom: De Uitleg -->
+            <div class="space-y-6">
+                <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h2 class="text-xl font-bold text-green-600 mb-4 flex items-center">
+                        <span class="bg-green-100 p-2 rounded-lg mr-2">🔋</span> Geheugen (State)
+                    </h2>
+                    <p class="text-slate-700 leading-relaxed">
+                        Een object kan dingen <strong>onthouden</strong>. In de vorige les had de robot een naam. Nu geven we hem <code>energie</code>. 
+                        Als hij eet, gaat de energie omhoog. Als hij danst, gaat de energie omlaag.
+                    </p>
+                </section>
+
+                <section class="bg-slate-900 p-6 rounded-2xl shadow-xl text-slate-300 font-mono text-sm">
+                    <h3 class="text-blue-400 mb-4 border-b border-slate-700 pb-2">// De Geavanceerde Blauwdruk</h3>
+                    <div class="space-y-1 overflow-x-auto">
+                        <p><span class="text-pink-500">class</span> <span class="text-yellow-400">Karakter</span> {</p>
+                        <p class="pl-4">  <span class="text-pink-500">constructor</span>(naam) {</p>
+                        <p class="pl-8">    <span class="text-blue-400">this</span>.naam = naam;</p>
+                        <p class="pl-8">    <span class="text-blue-400">this</span>.energie = <span class="text-purple-400">50</span>;</p>
+                        <p class="pl-4">  }</p>
+                        <p class="pl-4 mt-2 text-slate-500">  // Een nieuwe Method!</p>
+                        <p class="pl-4">  <span class="text-green-400">eet</span>() {</p>
+                        <p class="pl-8 text-yellow-100 bg-slate-800">    <span class="text-blue-400">this</span>.energie += <span class="text-purple-400">20</span>;</p>
+                        <p class="pl-4">  }</p>
+                        <p class="pl-4 mt-2 text-slate-500">  // OPDRACHT: Maak 'dans' af</p>
+                        <p class="pl-4">  <span class="text-green-400">dans</span>() {</p>
+                        <p class="pl-8 text-pink-400 italic">    // Hoe verlaag je energie?</p>
+                        <p class="pl-8">    <span class="text-blue-400">this</span>.energie -= <span class="text-purple-400">10</span>;</p>
+                        <p class="pl-4">  }</p>
+                        <p>}</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Rechter kolom: De Simulator -->
+            <div class="space-y-6">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 blueprint-grid flex flex-col items-center justify-center min-h-[400px]">
+                    
+                    <!-- Energie Balk -->
+                    <div class="w-full max-w-xs mb-8">
+                        <div class="flex justify-between mb-1">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-tighter">Energie Level</span>
+                            <span id="energy-text" class="text-xs font-bold text-blue-600">50%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden border border-slate-300">
+                            <div id="energy-bar" class="bg-blue-500 h-full transition-all duration-500" style="width: 50%"></div>
+                        </div>
+                    </div>
+
+                    <div id="character-sprite" class="bg-slate-800 w-32 h-32 rounded-full shadow-lg mb-6 flex items-center justify-center border-4 border-white transition-all duration-300">
+                        <span id="character-emoji" class="text-5xl">😐</span>
+                    </div>
+
+                    <div class="text-center mb-6">
+                        <h3 id="preview-name" class="text-2xl font-black text-slate-800">Mijn Bot</h3>
+                        <p id="preview-status" class="text-slate-500 font-medium italic mt-1 text-sm">Ik voel me neutraal.</p>
+                    </div>
+                    
+                    <!-- Actie Knoppen -->
+                    <div class="grid grid-cols-2 gap-4 w-full">
+                        <button onclick="doAction('eet')" class="bg-green-500 hover:bg-green-600 text-white p-3 rounded-xl font-bold flex flex-col items-center shadow-lg transition-transform active:scale-95">
+                            <span class="text-2xl">🍕</span>
+                            <span>Eten (+20)</span>
+                        </button>
+                        <button onclick="doAction('dans')" class="bg-pink-500 hover:bg-pink-600 text-white p-3 rounded-xl font-bold flex flex-col items-center shadow-lg transition-transform active:scale-95">
+                            <span class="text-2xl">💃</span>
+                            <span>Dansen (-10)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kleine "Code Editor" voor de student -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-slate-800 mb-2">Pas de Code aan:</h3>
+                    <p class="text-xs text-slate-500 mb-4">Wat moet de robot zeggen als hij danst? (Vervang de tekst tussen de aanhalingstekens)</p>
+                    <div class="bg-slate-50 p-3 rounded border border-slate-200 font-mono text-sm">
+                        <span class="text-blue-500">return</span> `<input type="text" id="dance-msg" value="Ik ben aan het swingen!" class="bg-yellow-100 border-b border-yellow-400 outline-none text-slate-800 px-1 w-48">`;
+                    </div>
+                    <p id="success-feedback" class="mt-4 text-sm font-bold text-green-600 hidden">✅ Goed gedaan! Probeer nu de dans-knop.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vertrouwen Sectie -->
+        <footer class="mt-12 bg-green-50 p-8 rounded-3xl border border-green-100">
+            <h3 class="text-xl font-bold text-green-900 mb-4">💡 Wat je nu ontdekt hebt:</h3>
+            <ul class="space-y-3">
+                <li class="flex items-center text-slate-700">
+                    <span class="mr-2 text-green-500">✔</span> 
+                    <strong>State:</strong> Jouw robot 'onthoudt' hoe moe hij is.
+                </li>
+                <li class="flex items-center text-slate-700">
+                    <span class="mr-2 text-green-500">✔</span> 
+                    <strong>Interactiviteit:</strong> Door Methods (functies in de class) aan te roepen, verander je het object.
+                </li>
+                <li class="flex items-center text-slate-700">
+                    <span class="mr-2 text-green-500">✔</span> 
+                    <strong>Logica:</strong> Je snapt dat <code>this.energie -= 10</code> de energie lager maakt.
+                </li>
+            </ul>
+        </footer>
+    </div>
+
+    <script>
+        class Karakter {
+            constructor(naam) {
+                this.naam = naam;
+                this.energie = 50;
+            }
+
+            eet() {
+                this.energie = Math.min(this.energie + 20, 100);
+                return `Nom nom! Mijn energie is nu ${this.energie}%.`;
+            }
+
+            dans() {
+                const customMsg = document.getElementById('dance-msg').value;
+                this.energie = Math.max(this.energie - 10, 0);
+                return customMsg;
+            }
+        }
+
+        const bot = new Karakter("Mijn Bot");
+
+        function doAction(type) {
+            let msg = "";
+            const emojiEl = document.getElementById('character-emoji');
+            const spriteEl = document.getElementById('character-sprite');
+            
+            if(type === 'eet') {
+                msg = bot.eet();
+                emojiEl.innerText = "😋";
+                spriteEl.classList.add('scale-110');
+                setTimeout(() => {
+                    spriteEl.classList.remove('scale-110');
+                    updateEmoji();
+                }, 1000);
+            } else {
+                msg = bot.dans();
+                emojiEl.innerText = "💃";
+                spriteEl.classList.add('rotate-12');
+                setTimeout(() => {
+                    spriteEl.classList.remove('rotate-12');
+                    updateEmoji();
+                }, 1000);
+            }
+
+            updateUI(msg);
+        }
+
+        function updateUI(statusText) {
+            document.getElementById('energy-bar').style.width = bot.energie + "%";
+            document.getElementById('energy-text').innerText = bot.energie + "%";
+            document.getElementById('preview-status').innerText = statusText;
+            
+            // Feedback voor de input
+            document.getElementById('success-feedback').classList.remove('hidden');
+        }
+
+        function updateEmoji() {
+            const emojiEl = document.getElementById('character-emoji');
+            if(bot.energie > 70) emojiEl.innerText = "😎";
+            else if(bot.energie < 30) emojiEl.innerText = "😴";
+            else emojiEl.innerText = "😐";
+        }
+    </script>
+</body>
+</html>

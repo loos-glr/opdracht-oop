@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boostles: De Robot Brigade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .blueprint-grid {
+            background-image: radial-gradient(#3b82f6 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-color: #f8fafc;
+        }
+        .robot-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .robot-card:hover {
+            transform: translateY(-5px);
+        }
+        @keyframes bounce-small {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-small {
+            animation: bounce-small 0.6s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen font-sans text-slate-900">
+
+    <div class="max-w-6xl mx-auto p-6">
+        <header class="mb-10 text-center">
+            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">Finale Opdracht</span>
+            <h1 class="text-4xl font-extrabold text-slate-800 mt-2 mb-2">🤖 De Robot Brigade</h1>
+            <p class="text-slate-600 text-lg">Eén Blauwdruk, maar <strong>honderden</strong> unieke robots.</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Linker kolom: De Uitleg -->
+            <div class="lg:col-span-1 space-y-6">
+                <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h2 class="text-xl font-bold text-indigo-600 mb-4 flex items-center">
+                        <span class="bg-indigo-100 p-2 rounded-lg mr-2">🏭</span> De Fabriek
+                    </h2>
+                    <p class="text-slate-700 text-sm leading-relaxed mb-4">
+                        Dit is het "Aha!"-moment van OOP. We hebben onze <code>class Robot</code> geschreven. 
+                        Nu gaan we die gebruiken als een fabriek. 
+                    </p>
+                    <p class="text-slate-700 text-sm leading-relaxed">
+                        Elke keer als je op "Maak Robot" klikt, roepen we <code>new Robot()</code> aan. 
+                        De ene robot kan slapen, terwijl de andere danst. Ze zijn <strong>onafhankelijk</strong>.
+                    </p>
+                </section>
+
+                <!-- De Code Preview -->
+                <section class="bg-slate-900 p-5 rounded-2xl shadow-xl text-slate-300 font-mono text-xs">
+                    <h3 class="text-indigo-400 mb-3 border-b border-slate-700 pb-2">// De Fabriek Logica</h3>
+                    <div class="space-y-1">
+                        <p><span class="text-pink-500">const</span> brigade = [];</p>
+                        <p class="mt-2 text-slate-500">// Elke klik maakt een uniek object</p>
+                        <p><span class="text-blue-400">function</span> <span class="text-green-400">voegRobotToe</span>(naam) {</p>
+                        <p class="pl-4">  <span class="text-pink-500">const</span> nieuweBot = <span class="text-pink-500">new</span> <span class="text-yellow-400">Robot</span>(naam);</p>
+                        <p class="pl-4">  brigade.<span class="text-green-400">push</span>(nieuweBot);</p>
+                        <p>}</p>
+                    </div>
+                </section>
+
+                <!-- Input Zone -->
+                <div class="bg-indigo-600 p-6 rounded-2xl shadow-lg text-white">
+                    <h3 class="font-bold mb-3">Bouw een nieuwe Robot:</h3>
+                    <div class="space-y-3">
+                        <input type="text" id="bot-name-input" placeholder="Geef je robot een naam..." class="w-full px-4 py-2 rounded-lg bg-indigo-500 border border-indigo-400 placeholder-indigo-200 text-white outline-none focus:ring-2 focus:ring-white">
+                        <button onclick="createNewRobot()" class="w-full bg-white text-indigo-600 font-bold py-2 rounded-lg hover:bg-indigo-50 transition-all active:scale-95 shadow-md">
+                            + Maak Robot
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rechter kolom: De Arena (De Brigade) -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 blueprint-grid min-h-[500px]">
+                    <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">De Actieve Brigade</h2>
+                    
+                    <div id="robot-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Hier komen de robots dynamisch in -->
+                        <div id="empty-state" class="col-span-full flex flex-col items-center justify-center py-20 text-slate-400">
+                            <span class="text-6xl mb-4">🏗️</span>
+                            <p class="font-medium">De fabriek staat nog stil. Maak je eerste robot!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Finale Reflectie -->
+        <footer class="mt-12 bg-white p-8 rounded-3xl border border-slate-200 shadow-sm text-center">
+            <h3 class="text-2xl font-black text-slate-800 mb-6">🎓 Gefeliciteerd! Je bent nu een Object-Designer.</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                <div class="p-4 bg-slate-50 rounded-xl">
+                    <h4 class="font-bold text-indigo-600 mb-1">Concept 1</h4>
+                    <p class="text-sm text-slate-600 text-pretty">Je snapt dat een <strong>Class</strong> de bouwtekening is.</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-xl">
+                    <h4 class="font-bold text-indigo-600 mb-1">Concept 2</h4>
+                    <p class="text-sm text-slate-600 text-pretty">Je weet dat <strong>this</strong> naar het specifieke object wijst.</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-xl">
+                    <h4 class="font-bold text-indigo-600 mb-1">Concept 3</h4>
+                    <p class="text-sm text-slate-600 text-pretty">Je hebt gezien dat <strong>objecten</strong> hun eigen geheugen hebben.</p>
+                </div>
+            </div>
+            <button onclick="alert('Je hebt de basis van Scripting OOP officieel gekraakt! Laat dit aan je docent zien.')" class="mt-8 bg-slate-800 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-700 transition-all">
+                Sessie Voltooien 🏆
+            </button>
+        </footer>
+    </div>
+
+    <script>
+        // De Class die we de hele les hebben opgebouwd
+        class Robot {
+            constructor(naam) {
+                // We gebruiken een unieke ID voor elk object
+                this.id = Math.floor(Math.random() * 1000000);
+                this.naam = naam;
+                this.energie = 100;
+                this.status = "Klaar voor actie";
+            }
+
+            werk() {
+                if (this.energie >= 20) {
+                    this.energie -= 20;
+                    this.status = "Hard aan het werk...";
+                    return true;
+                } else {
+                    this.status = "Batterij bijna leeg! 🪫";
+                    return false;
+                }
+            }
+
+            laadOp() {
+                this.energie = 100;
+                this.status = "Volledig opgeladen! ⚡";
+            }
+        }
+
+        let brigade = [];
+        
+        // We slaan de HTML van de 'empty state' op in een constante
+        // Zo voorkomen we dat we deze kwijtraken als de container wordt overschreven
+        const emptyStateHTML = `
+            <div id="empty-state" class="col-span-full flex flex-col items-center justify-center py-20 text-slate-400">
+                <span class="text-6xl mb-4">🏗️</span>
+                <p class="font-medium">De fabriek staat nog stil. Maak je eerste robot!</p>
+            </div>
+        `;
+
+        function createNewRobot() {
+            const input = document.getElementById('bot-name-input');
+            const naam = input.value.trim() || "Robo-" + (brigade.length + 1);
+            
+            // HET OOP MOMENT: We maken een nieuw, uniek object
+            const nieuweBot = new Robot(naam);
+            brigade.push(nieuweBot);
+            
+            input.value = "";
+            renderBrigade();
+        }
+
+        function robotActie(id, actie) {
+            const bot = brigade.find(b => b.id === id);
+            
+            if (actie === 'werk') {
+                bot.werk();
+                // We animeren de kaart kort voor visuele feedback
+                const card = document.getElementById(`card-${id}`);
+                if (card) {
+                    card.classList.add('animate-bounce-small');
+                    setTimeout(() => card.classList.remove('animate-bounce-small'), 600);
+                }
+            } else {
+                bot.laadOp();
+            }
+            renderBrigade();
+        }
+
+        function renderBrigade() {
+            const container = document.getElementById('robot-container');
+            
+            if (brigade.length === 0) {
+                container.innerHTML = emptyStateHTML;
+                return;
+            }
+
+            container.innerHTML = brigade.map(bot => `
+                <div id="card-${bot.id}" class="robot-card bg-white border-2 border-slate-200 p-5 rounded-2xl shadow-sm hover:border-indigo-300">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="font-black text-slate-800 uppercase text-sm">${bot.naam}</h3>
+                            <p class="text-[10px] text-slate-400 font-mono italic">${bot.status}</p>
+                        </div>
+                        <span class="text-2xl">${bot.energie > 20 ? '🤖' : '😴'}</span>
+                    </div>
+                    
+                    <div class="w-full bg-slate-100 h-2 rounded-full mb-4 overflow-hidden">
+                        <div class="h-full transition-all duration-500 ${bot.energie > 20 ? 'bg-indigo-500' : 'bg-red-500'}" style="width: ${bot.energie}%"></div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button onclick="robotActie(${bot.id}, 'werk')" class="flex-1 bg-slate-800 text-white text-[10px] py-2 rounded-lg font-bold hover:bg-slate-700">WERK</button>
+                        <button onclick="robotActie(${bot.id}, 'laad')" class="flex-1 bg-indigo-50 text-indigo-600 text-[10px] py-2 rounded-lg font-bold hover:bg-indigo-100">LADEN</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
